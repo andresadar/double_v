@@ -203,9 +203,8 @@ flutter build ios --release    # iOS
 **Andrés Arenas**  
 *Candidato para Double V Partners NYX*
 
-📧 **Email:** [tu-email@ejemplo.com]  
-💼 **LinkedIn:** [tu-perfil-linkedin]  
-🐙 **GitHub:** [tu-usuario-github]
+📧 **Email:** [andresadar@hotmail.com]  
+🐙 **GitHub:** [andresadar]
 
 ---
 
