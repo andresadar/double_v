@@ -1,149 +1,77 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import '../../../../core/errors/exceptions.dart';
 import 'address_data_sources.dart';
 
-/// Implementación de LocationRemoteDataSource usando Dio
-/// Para efectos de la prueba, usaremos datos mock
+/// Implementación de LocationRemoteDataSource usando archivos JSON mock
+/// Lee datos realistas desde assets/data/countries.json
 /// En una implementación real, esto consultaría APIs de países/departamentos
 class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
-  const LocationRemoteDataSourceImpl(this._dio);
-
-  final Dio _dio;
+  const LocationRemoteDataSourceImpl();
 
   @override
   Future<List<String>> getCountries() async {
     try {
-      // Mock data para la prueba técnica
-      // En una implementación real, esto haría una llamada HTTP
-      await Future.delayed(const Duration(milliseconds: 500)); // Simula latencia
+      final jsonString = await rootBundle.loadString('assets/data/countries.json');
+      final List<dynamic> countriesData = json.decode(jsonString);
       
-      return [
-        'Colombia',
-        'Argentina',
-        'México',
-        'Perú',
-        'Chile',
-        'Ecuador',
-        'Venezuela',
-        'Brasil',
-      ];
+      return countriesData.map<String>((country) => country['name'] as String).toList();
     } catch (e) {
-      throw ServerException('Error al obtener países: ${e.toString()}');
+      throw ServerException('Error loading countries: $e');
     }
   }
 
   @override
-  Future<List<String>> getDepartments(String country) async {
+  Future<List<String>> getDepartments(String countryName) async {
     try {
-      await Future.delayed(const Duration(milliseconds: 500)); // Simula latencia
+      final jsonString = await rootBundle.loadString('assets/data/countries.json');
+      final List<dynamic> countriesData = json.decode(jsonString);
       
-      // Mock data basado en el país seleccionado
-      switch (country) {
-        case 'Colombia':
-          return [
-            'Antioquia',
-            'Cundinamarca',
-            'Valle del Cauca',
-            'Atlántico',
-            'Santander',
-            'Bolívar',
-            'Norte de Santander',
-            'Córdoba',
-            'Tolima',
-            'Meta',
-          ];
-        case 'Argentina':
-          return [
-            'Buenos Aires',
-            'Córdoba',
-            'Santa Fe',
-            'Mendoza',
-            'Tucumán',
-            'Entre Ríos',
-            'Salta',
-            'Chaco',
-          ];
-        case 'México':
-          return [
-            'Ciudad de México',
-            'Estado de México',
-            'Jalisco',
-            'Nuevo León',
-            'Puebla',
-            'Guanajuato',
-            'Veracruz',
-            'Michoacán',
-          ];
-        default:
-          return [
-            'Departamento 1',
-            'Departamento 2',
-            'Departamento 3',
-          ];
+      final country = countriesData.firstWhere(
+        (c) => c['name'] == countryName,
+        orElse: () => null,
+      );
+      
+      if (country == null) {
+        throw ServerException('Country not found: $countryName');
       }
+      
+      final List<dynamic> departments = country['departments'] ?? [];
+      return departments.map<String>((dept) => dept['name'] as String).toList();
     } catch (e) {
-      throw ServerException('Error al obtener departamentos: ${e.toString()}');
+      throw ServerException('Error loading departments: $e');
     }
   }
 
   @override
-  Future<List<String>> getMunicipalities(String country, String department) async {
+  Future<List<String>> getMunicipalities(String countryName, String departmentName) async {
     try {
-      await Future.delayed(const Duration(milliseconds: 500)); // Simula latencia
+      final jsonString = await rootBundle.loadString('assets/data/countries.json');
+      final List<dynamic> countriesData = json.decode(jsonString);
       
-      // Mock data basado en el departamento seleccionado
-      if (country == 'Colombia') {
-        switch (department) {
-          case 'Antioquia':
-            return [
-              'Medellín',
-              'Bello',
-              'Itagüí',
-              'Envigado',
-              'Apartadó',
-              'Turbo',
-              'Rionegro',
-              'Sabaneta',
-            ];
-          case 'Cundinamarca':
-            return [
-              'Bogotá',
-              'Soacha',
-              'Girardot',
-              'Zipaquirá',
-              'Facatativá',
-              'Chía',
-              'Mosquera',
-              'Fusagasugá',
-            ];
-          case 'Valle del Cauca':
-            return [
-              'Cali',
-              'Palmira',
-              'Buenaventura',
-              'Cartago',
-              'Buga',
-              'Tuluá',
-              'Jamundí',
-            ];
-          default:
-            return [
-              'Municipio 1',
-              'Municipio 2',
-              'Municipio 3',
-            ];
-        }
+      final country = countriesData.firstWhere(
+        (c) => c['name'] == countryName,
+        orElse: () => null,
+      );
+      
+      if (country == null) {
+        throw ServerException('Country not found: $countryName');
       }
       
-      // Para otros países, devolvemos datos genéricos
-      return [
-        'Municipio A',
-        'Municipio B',
-        'Municipio C',
-        'Municipio D',
-      ];
+      final List<dynamic> departments = country['departments'] ?? [];
+      final department = departments.firstWhere(
+        (d) => d['name'] == departmentName,
+        orElse: () => null,
+      );
+      
+      if (department == null) {
+        throw ServerException('Department not found: $departmentName');
+      }
+      
+      final List<dynamic> municipalities = department['municipalities'] ?? [];
+      return municipalities.map<String>((muni) => muni['name'] as String).toList();
     } catch (e) {
-      throw ServerException('Error al obtener municipios: ${e.toString()}');
+      throw ServerException('Error loading municipalities: $e');
     }
   }
 }

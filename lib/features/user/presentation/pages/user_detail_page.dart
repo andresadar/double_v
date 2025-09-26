@@ -23,12 +23,36 @@ class UserDetailPage extends ConsumerWidget {
         title: const Text('Detalles del Usuario'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              context.push(AppRoutes.userForm, extra: userId);
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'edit') {
+                context.push(AppRoutes.userForm, extra: userId);
+              } else if (value == 'delete') {
+                _showDeleteUserDialog(context, ref);
+              }
             },
-            tooltip: 'Editar usuario',
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit),
+                    SizedBox(width: 8),
+                    Text('Editar usuario'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, color: Colors.red),
+                    SizedBox(width: 8),
+                    Text('Eliminar usuario', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -175,6 +199,9 @@ class UserDetailPage extends ConsumerWidget {
                           onEdit: () {
                             context.push('/user/$userId/address-form', extra: address.id);
                           },
+                          onDelete: () {
+                            _showDeleteAddressDialog(context, ref, address.id, address.street);
+                          },
                         );
                       }).toList(),
                     );
@@ -221,6 +248,117 @@ class UserDetailPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// Muestra un diálogo de confirmación para eliminar el usuario
+  void _showDeleteUserDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Eliminar Usuario'),
+        content: const Text(
+          '¿Estás seguro de que quieres eliminar este usuario? '
+          'Esta acción no se puede deshacer y eliminará también todas sus direcciones.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _deleteUser(context, ref);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Elimina el usuario
+  void _deleteUser(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(deleteUserProvider.notifier).deleteUser(userId);
+      
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuario eliminado exitosamente'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.pop(); // Regresar a la lista de usuarios
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al eliminar usuario: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// Muestra un diálogo de confirmación para eliminar una dirección
+  void _showDeleteAddressDialog(BuildContext context, WidgetRef ref, String addressId, String addressName) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Eliminar Dirección'),
+        content: Text(
+          '¿Estás seguro de que quieres eliminar la dirección "$addressName"? '
+          'Esta acción no se puede deshacer.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _deleteAddress(context, ref, addressId);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Elimina la dirección
+  void _deleteAddress(BuildContext context, WidgetRef ref, String addressId) async {
+    try {
+      await ref.read(deleteAddressProvider.notifier).deleteAddress(addressId);
+      
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Dirección eliminada exitosamente'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al eliminar dirección: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }
 

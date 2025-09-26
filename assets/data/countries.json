@@ -1,0 +1,348 @@
+[
+  {
+    "code": "CO",
+    "name": "Colombia",
+    "flag": "🇨🇴",
+    "departments": [
+      {
+        "code": "ANT",
+        "name": "Antioquia",
+        "municipalities": [
+          { "code": "05001", "name": "Medellín" },
+          { "code": "05088", "name": "Bello" },
+          { "code": "05360", "name": "Itagüí" },
+          { "code": "05266", "name": "Envigado" },
+          { "code": "05631", "name": "Rionegro" },
+          { "code": "05631", "name": "Sabaneta" },
+          { "code": "05045", "name": "Apartadó" },
+          { "code": "05837", "name": "Turbo" },
+          { "code": "05129", "name": "Caldas" },
+          { "code": "05380", "name": "La Estrella" }
+        ]
+      },
+      {
+        "code": "CUN",
+        "name": "Cundinamarca",
+        "municipalities": [
+          { "code": "11001", "name": "Bogotá D.C." },
+          { "code": "25754", "name": "Soacha" },
+          { "code": "25286", "name": "Girardot" },
+          { "code": "25899", "name": "Zipaquirá" },
+          { "code": "25269", "name": "Facatativá" },
+          { "code": "25175", "name": "Chía" },
+          { "code": "25486", "name": "Mosquera" },
+          { "code": "25290", "name": "Fusagasugá" },
+          { "code": "25214", "name": "Cajicá" },
+          { "code": "25758", "name": "Sopó" }
+        ]
+      },
+      {
+        "code": "VAL",
+        "name": "Valle del Cauca",
+        "municipalities": [
+          { "code": "76001", "name": "Cali" },
+          { "code": "76520", "name": "Palmira" },
+          { "code": "76109", "name": "Buenaventura" },
+          { "code": "76147", "name": "Cartago" },
+          { "code": "76111", "name": "Buga" },
+          { "code": "76834", "name": "Tuluá" },
+          { "code": "76364", "name": "Jamundí" },
+          { "code": "76892", "name": "Yumbo" },
+          { "code": "76563", "name": "Pradera" },
+          { "code": "76130", "name": "Candelaria" }
+        ]
+      },
+      {
+        "code": "ATL",
+        "name": "Atlántico",
+        "municipalities": [
+          { "code": "08001", "name": "Barranquilla" },
+          { "code": "08758", "name": "Soledad" },
+          { "code": "08480", "name": "Malambo" },
+          { "code": "08549", "name": "Puerto Colombia" },
+          { "code": "08296", "name": "Galapa" },
+          { "code": "08675", "name": "Santo Tomás" },
+          { "code": "08520", "name": "Palmar de Varela" },
+          { "code": "08141", "name": "Candelaria" },
+          { "code": "08606", "name": "Repelón" },
+          { "code": "08078", "name": "Baranoa" }
+        ]
+      },
+      {
+        "code": "SAN",
+        "name": "Santander",
+        "municipalities": [
+          { "code": "68001", "name": "Bucaramanga" },
+          { "code": "68276", "name": "Floridablanca" },
+          { "code": "68307", "name": "Girón" },
+          { "code": "68547", "name": "Piedecuesta" },
+          { "code": "68081", "name": "Barbosa" },
+          { "code": "68679", "name": "San Juan de Girón" },
+          { "code": "68229", "name": "El Carmen de Chucurí" },
+          { "code": "68190", "name": "Cimitarra" },
+          { "code": "68370", "name": "Lebrija" },
+          { "code": "68013", "name": "Aguada" }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "US",
+    "name": "Estados Unidos",
+    "flag": "🇺🇸",
+    "departments": [
+      {
+        "code": "CA",
+        "name": "California",
+        "municipalities": [
+          { "code": "LAX", "name": "Los Ángeles" },
+          { "code": "SF", "name": "San Francisco" },
+          { "code": "SD", "name": "San Diego" },
+          { "code": "SAC", "name": "Sacramento" },
+          { "code": "SJ", "name": "San José" },
+          { "code": "LB", "name": "Long Beach" },
+          { "code": "FRE", "name": "Fresno" },
+          { "code": "OAK", "name": "Oakland" },
+          { "code": "ANA", "name": "Anaheim" },
+          { "code": "RIV", "name": "Riverside" }
+        ]
+      },
+      {
+        "code": "TX",
+        "name": "Texas",
+        "municipalities": [
+          { "code": "HOU", "name": "Houston" },
+          { "code": "DAL", "name": "Dallas" },
+          { "code": "SA", "name": "San Antonio" },
+          { "code": "AUS", "name": "Austin" },
+          { "code": "FW", "name": "Fort Worth" },
+          { "code": "EP", "name": "El Paso" },
+          { "code": "ARL", "name": "Arlington" },
+          { "code": "CRP", "name": "Corpus Christi" },
+          { "code": "PLN", "name": "Plano" },
+          { "code": "LUB", "name": "Lubbock" }
+        ]
+      },
+      {
+        "code": "FL",
+        "name": "Florida",
+        "municipalities": [
+          { "code": "MIA", "name": "Miami" },
+          { "code": "JAX", "name": "Jacksonville" },
+          { "code": "TB", "name": "Tampa" },
+          { "code": "ORL", "name": "Orlando" },
+          { "code": "STU", "name": "St. Petersburg" },
+          { "code": "HIL", "name": "Hialeah" },
+          { "code": "TAL", "name": "Tallahassee" },
+          { "code": "FTL", "name": "Fort Lauderdale" },
+          { "code": "PB", "name": "Port St. Lucie" },
+          { "code": "CAP", "name": "Cape Coral" }
+        ]
+      },
+      {
+        "code": "NY",
+        "name": "Nueva York",
+        "municipalities": [
+          { "code": "NYC", "name": "Nueva York" },
+          { "code": "BUF", "name": "Buffalo" },
+          { "code": "ROC", "name": "Rochester" },
+          { "code": "YON", "name": "Yonkers" },
+          { "code": "SYR", "name": "Syracuse" },
+          { "code": "ALB", "name": "Albany" },
+          { "code": "NEW", "name": "New Rochelle" },
+          { "code": "MOU", "name": "Mount Vernon" },
+          { "code": "SCH", "name": "Schenectady" },
+          { "code": "UTA", "name": "Utica" }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "MX",
+    "name": "México",
+    "flag": "🇲🇽",
+    "departments": [
+      {
+        "code": "CDMX",
+        "name": "Ciudad de México",
+        "municipalities": [
+          { "code": "001", "name": "Álvaro Obregón" },
+          { "code": "002", "name": "Azcapotzalco" },
+          { "code": "003", "name": "Benito Juárez" },
+          { "code": "004", "name": "Coyoacán" },
+          { "code": "005", "name": "Cuajimalpa" },
+          { "code": "006", "name": "Cuauhtémoc" },
+          { "code": "007", "name": "Gustavo A. Madero" },
+          { "code": "008", "name": "Iztacalco" },
+          { "code": "009", "name": "Iztapalapa" },
+          { "code": "010", "name": "Miguel Hidalgo" }
+        ]
+      },
+      {
+        "code": "JAL",
+        "name": "Jalisco",
+        "municipalities": [
+          { "code": "039", "name": "Guadalajara" },
+          { "code": "120", "name": "Zapopan" },
+          { "code": "097", "name": "Tlaquepaque" },
+          { "code": "101", "name": "Tonalá" },
+          { "code": "070", "name": "Puerto Vallarta" },
+          { "code": "017", "name": "Chapala" },
+          { "code": "124", "name": "Zapotlán el Grande" },
+          { "code": "037", "name": "El Salto" },
+          { "code": "020", "name": "Colotlán" },
+          { "code": "014", "name": "Autlán de Navarro" }
+        ]
+      },
+      {
+        "code": "NL",
+        "name": "Nuevo León",
+        "municipalities": [
+          { "code": "039", "name": "Monterrey" },
+          { "code": "031", "name": "Guadalupe" },
+          { "code": "046", "name": "San Nicolás de los Garza" },
+          { "code": "019", "name": "Escobedo" },
+          { "code": "006", "name": "Apodaca" },
+          { "code": "048", "name": "Santa Catarina" },
+          { "code": "030", "name": "García" },
+          { "code": "009", "name": "Cadereyta Jiménez" },
+          { "code": "026", "name": "General Escobedo" },
+          { "code": "025", "name": "Garza García" }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "AR",
+    "name": "Argentina",
+    "flag": "🇦🇷",
+    "departments": [
+      {
+        "code": "BA",
+        "name": "Buenos Aires",
+        "municipalities": [
+          { "code": "CABA", "name": "Ciudad de Buenos Aires" },
+          { "code": "LPL", "name": "La Plata" },
+          { "code": "MDP", "name": "Mar del Plata" },
+          { "code": "QUI", "name": "Quilmes" },
+          { "code": "LAN", "name": "Lanús" },
+          { "code": "SMI", "name": "San Miguel" },
+          { "code": "TIG", "name": "Tigre" },
+          { "code": "MOR", "name": "Morón" },
+          { "code": "AVE", "name": "Avellaneda" },
+          { "code": "SIM", "name": "San Isidro" }
+        ]
+      },
+      {
+        "code": "COR",
+        "name": "Córdoba",
+        "municipalities": [
+          { "code": "COR", "name": "Córdoba" },
+          { "code": "RCU", "name": "Río Cuarto" },
+          { "code": "VCA", "name": "Villa Carlos Paz" },
+          { "code": "SFR", "name": "San Francisco" },
+          { "code": "VMD", "name": "Villa María" },
+          { "code": "RIO", "name": "Río Tercero" },
+          { "code": "COL", "name": "Colón" },
+          { "code": "JES", "name": "Jesús María" },
+          { "code": "CRU", "name": "Cruz del Eje" },
+          { "code": "LAB", "name": "Laboulaye" }
+        ]
+      },
+      {
+        "code": "SF",
+        "name": "Santa Fe",
+        "municipalities": [
+          { "code": "ROS", "name": "Rosario" },
+          { "code": "SF", "name": "Santa Fe" },
+          { "code": "VGB", "name": "Villa Gobernador Gálvez" },
+          { "code": "CAS", "name": "Casilda" },
+          { "code": "VEN", "name": "Venado Tuerto" },
+          { "code": "ESP", "name": "Esperanza" },
+          { "code": "REC", "name": "Reconquista" },
+          { "code": "RAE", "name": "Rafaela" },
+          { "code": "SLO", "name": "San Lorenzo" },
+          { "code": "CAP", "name": "Capitán Bermúdez" }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "BR",
+    "name": "Brasil",
+    "flag": "🇧🇷",
+    "departments": [
+      {
+        "code": "SP",
+        "name": "São Paulo",
+        "municipalities": [
+          { "code": "SP", "name": "São Paulo" },
+          { "code": "GUA", "name": "Guarulhos" },
+          { "code": "CAM", "name": "Campinas" },
+          { "code": "SBC", "name": "São Bernardo do Campo" },
+          { "code": "STO", "name": "Santo André" },
+          { "code": "OSA", "name": "Osasco" },
+          { "code": "SJC", "name": "São José dos Campos" },
+          { "code": "RIB", "name": "Ribeirão Preto" },
+          { "code": "SOA", "name": "Sorocaba" },
+          { "code": "SAN", "name": "Santos" }
+        ]
+      },
+      {
+        "code": "RJ",
+        "name": "Río de Janeiro",
+        "municipalities": [
+          { "code": "RJ", "name": "Río de Janeiro" },
+          { "code": "SGO", "name": "São Gonçalo" },
+          { "code": "DUQ", "name": "Duque de Caxias" },
+          { "code": "NOV", "name": "Nova Iguaçu" },
+          { "code": "NIT", "name": "Niterói" },
+          { "code": "BEL", "name": "Belford Roxo" },
+          { "code": "SJM", "name": "São João de Meriti" },
+          { "code": "PET", "name": "Petrópolis" },
+          { "code": "VOL", "name": "Volta Redonda" },
+          { "code": "MAG", "name": "Magé" }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "PE",
+    "name": "Perú",
+    "flag": "🇵🇪",
+    "departments": [
+      {
+        "code": "LIM",
+        "name": "Lima",
+        "municipalities": [
+          { "code": "LIM", "name": "Lima" },
+          { "code": "CAL", "name": "Callao" },
+          { "code": "SJL", "name": "San Juan de Lurigancho" },
+          { "code": "SMP", "name": "San Martín de Porres" },
+          { "code": "ATE", "name": "Ate" },
+          { "code": "CAR", "name": "Comas" },
+          { "code": "VES", "name": "Villa El Salvador" },
+          { "code": "VMT", "name": "Villa María del Triunfo" },
+          { "code": "SJM", "name": "San Juan de Miraflores" },
+          { "code": "LOS", "name": "Los Olivos" }
+        ]
+      },
+      {
+        "code": "ARE",
+        "name": "Arequipa",
+        "municipalities": [
+          { "code": "ARE", "name": "Arequipa" },
+          { "code": "CAM", "name": "Camaná" },
+          { "code": "CAR", "name": "Caravelí" },
+          { "code": "CAS", "name": "Castilla" },
+          { "code": "CAY", "name": "Caylloma" },
+          { "code": "CON", "name": "Condesuyos" },
+          { "code": "ISL", "name": "Islay" },
+          { "code": "LAU", "name": "La Unión" },
+          { "code": "MOL", "name": "Mollendo" },
+          { "code": "YAN", "name": "Yanahuara" }
+        ]
+      }
+    ]
+  }
+]

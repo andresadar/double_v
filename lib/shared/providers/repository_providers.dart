@@ -37,7 +37,7 @@ final addressLocalDataSourceProvider = Provider<AddressLocalDataSource>((ref) {
 
 /// Provider para LocationRemoteDataSource
 final locationRemoteDataSourceProvider = Provider<LocationRemoteDataSource>((ref) {
-  return LocationRemoteDataSourceImpl(ref.watch(dioProvider));
+  return const LocationRemoteDataSourceImpl();
 });
 
 /// Provider para AddressRepository

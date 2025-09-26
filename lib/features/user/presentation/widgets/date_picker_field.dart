@@ -66,7 +66,7 @@ class DatePickerField extends StatelessWidget {
                   filled: true,
                   fillColor: enabled 
                       ? Theme.of(context).colorScheme.surface 
-                      : Theme.of(context).disabledColor.withOpacity(0.1),
+                      : Theme.of(context).disabledColor.withValues(alpha: 0.1),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,

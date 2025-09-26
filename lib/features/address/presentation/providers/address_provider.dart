@@ -5,6 +5,7 @@ import '../../domain/entities/address.dart';
 import '../../domain/usecases/create_address.dart';
 import '../../domain/usecases/get_addresses_by_user_id.dart';
 import '../../domain/usecases/get_countries.dart';
+import '../../domain/usecases/delete_address.dart';
 
 /// Provider para el caso de uso GetAddressesByUserId
 final getAddressesByUserIdUseCaseProvider = Provider<GetAddressesByUserId>((ref) {
@@ -21,6 +22,11 @@ final getCountriesUseCaseProvider = Provider<GetCountries>((ref) {
   return GetCountries(ref.watch(addressRepositoryProvider));
 });
 
+/// Provider para el caso de uso DeleteAddress
+final deleteAddressUseCaseProvider = Provider<DeleteAddress>((ref) {
+  return DeleteAddress(ref.watch(addressRepositoryProvider));
+});
+
 /// Provider que obtiene las direcciones de un usuario
 final addressesByUserIdProvider = FutureProvider.family<List<Address>, String>((ref, userId) async {
   final getAddressesUseCase = ref.watch(getAddressesByUserIdUseCaseProvider);
@@ -35,7 +41,12 @@ final countriesProvider = FutureProvider<List<String>>((ref) async {
 
 /// Provider para el estado del formulario de dirección
 final addressFormProvider = StateNotifierProvider<AddressFormNotifier, AddressFormState>((ref) {
-  return AddressFormNotifier(ref.watch(createAddressUseCaseProvider));
+  return AddressFormNotifier(ref.watch(createAddressUseCaseProvider), ref);
+});
+
+/// Provider para manejar la eliminación de direcciones
+final deleteAddressProvider = StateNotifierProvider<DeleteAddressNotifier, AsyncValue<void>>((ref) {
+  return DeleteAddressNotifier(ref.watch(deleteAddressUseCaseProvider), ref);
 });
 
 /// Estado del formulario de dirección
@@ -65,9 +76,10 @@ class AddressFormState {
 
 /// Notifier para manejar el estado del formulario de dirección
 class AddressFormNotifier extends StateNotifier<AddressFormState> {
-  AddressFormNotifier(this._createAddressUseCase) : super(const AddressFormState());
+  AddressFormNotifier(this._createAddressUseCase, this._ref) : super(const AddressFormState());
 
   final CreateAddress _createAddressUseCase;
+  final Ref _ref;
 
   Future<void> createAddress({
     required String userId,
@@ -89,6 +101,9 @@ class AddressFormNotifier extends StateNotifier<AddressFormState> {
         additionalInfo: additionalInfo,
       ));
       
+      // Invalidar los providers de direcciones para que se actualicen
+      _ref.invalidate(addressesByUserIdProvider);
+      
       state = state.copyWith(isLoading: false, isSuccess: true);
     } catch (e) {
       state = state.copyWith(
@@ -100,5 +115,28 @@ class AddressFormNotifier extends StateNotifier<AddressFormState> {
 
   void resetForm() {
     state = const AddressFormState();
+  }
+}
+
+/// Notifier para manejar la eliminación de direcciones
+class DeleteAddressNotifier extends StateNotifier<AsyncValue<void>> {
+  DeleteAddressNotifier(this._deleteAddressUseCase, this._ref) : super(const AsyncValue.data(null));
+
+  final DeleteAddress _deleteAddressUseCase;
+  final Ref _ref;
+
+  Future<void> deleteAddress(String addressId) async {
+    state = const AsyncValue.loading();
+
+    try {
+      await _deleteAddressUseCase(addressId);
+      
+      // Invalidar el provider de direcciones para que se actualice la lista
+      _ref.invalidate(addressesByUserIdProvider);
+      
+      state = const AsyncValue.data(null);
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+    }
   }
 }

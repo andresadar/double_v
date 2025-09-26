@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_routes.dart';
 import '../../../../core/utils/app_utils.dart' as app_utils;
 import '../providers/user_provider.dart';
 import '../widgets/custom_text_field.dart';
@@ -43,7 +42,12 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.go(AppRoutes.home);
+        // Resetear el formulario
+        ref.read(userFormProvider.notifier).resetForm();
+        // Navegar de vuelta al home
+        if (context.mounted) {
+          context.pop();
+        }
       } else if (next.errorMessage != null && previous?.errorMessage != next.errorMessage) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

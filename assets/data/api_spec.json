@@ -1,0 +1,133 @@
+{
+  "api_version": "1.0",
+  "endpoints": {
+    "base_url": "https://api.doublevpartners.com/v1",
+    "users": {
+      "get_all": "/users",
+      "get_by_id": "/users/{id}",
+      "create": "/users",
+      "update": "/users/{id}",
+      "delete": "/users/{id}"
+    },
+    "addresses": {
+      "get_by_user": "/users/{user_id}/addresses",
+      "create": "/users/{user_id}/addresses",
+      "update": "/addresses/{id}",
+      "delete": "/addresses/{id}"
+    },
+    "locations": {
+      "countries": "/locations/countries",
+      "departments": "/locations/countries/{country_code}/departments",
+      "municipalities": "/locations/departments/{department_code}/municipalities"
+    }
+  },
+  "response_formats": {
+    "success": {
+      "status": "success",
+      "data": {},
+      "message": "Operation completed successfully"
+    },
+    "error": {
+      "status": "error",
+      "error": {
+        "code": "ERROR_CODE",
+        "message": "Error description",
+        "details": {}
+      }
+    }
+  },
+  "http_status_codes": {
+    "200": "OK - Request successful",
+    "201": "Created - Resource created successfully",
+    "400": "Bad Request - Invalid request data",
+    "404": "Not Found - Resource not found",
+    "422": "Unprocessable Entity - Validation errors",
+    "500": "Internal Server Error - Server error"
+  },
+  "validation_rules": {
+    "user": {
+      "firstName": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 50,
+        "pattern": "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$"
+      },
+      "lastName": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 50,
+        "pattern": "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$"
+      },
+      "email": {
+        "required": true,
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+        "unique": true
+      },
+      "phone": {
+        "required": true,
+        "pattern": "^\\+?[1-9]\\d{1,14}$"
+      },
+      "birthDate": {
+        "required": true,
+        "format": "YYYY-MM-DD",
+        "min_age": 18,
+        "max_age": 120
+      }
+    },
+    "address": {
+      "country": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 50
+      },
+      "department": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 50
+      },
+      "municipality": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 50
+      },
+      "street": {
+        "required": true,
+        "min_length": 5,
+        "max_length": 200
+      },
+      "postalCode": {
+        "required": false,
+        "max_length": 20
+      },
+      "type": {
+        "required": true,
+        "enum": ["home", "work", "other"]
+      }
+    }
+  },
+  "example_requests": {
+    "create_user": {
+      "method": "POST",
+      "url": "/users",
+      "body": {
+        "firstName": "Juan Carlos",
+        "lastName": "García López",
+        "email": "juan.garcia@email.com",
+        "phone": "+57 300 123 4567",
+        "birthDate": "1985-03-15"
+      }
+    },
+    "create_address": {
+      "method": "POST",
+      "url": "/users/1/addresses",
+      "body": {
+        "country": "Colombia",
+        "department": "Antioquia",
+        "municipality": "Medellín",
+        "street": "Carrera 70 #45-32",
+        "postalCode": "050001",
+        "type": "home"
+      }
+    }
+  }
+}

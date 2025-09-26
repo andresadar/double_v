@@ -1,70 +1,231 @@
-# DoubleV - Prueba Técnica Flutter
+# DoubleV - Aplicación de Gestión de Usuarios 👥
 
-Aplicación móvil desarrollada en Flutter como prueba técnica para Double V Partners NYX.
+<div align="center">
 
-## 📋 Descripción del Proyecto
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+![Riverpod](https://img.shields.io/badge/Riverpod-purple?style=for-the-badge)
 
-Aplicación que permite crear usuarios con información personal y gestionar múltiples direcciones por usuario. El proyecto implementa Clean Architecture, principios SOLID y las mejores prácticas de desarrollo en Flutter.
+**Aplicación móvil desarrollada con Clean Architecture y las mejores prácticas de Flutter**
 
-### Funcionalidades
+[Características](#-características) •
+[Instalación](#-instalación) •
+[Arquitectura](#️-arquitectura) •
+[Screenshots](#-screenshots) •
+[Testing](#-testing)
 
-- ✅ Formulario de creación de usuarios (Nombre, Apellido, Fecha de nacimiento)
-- ✅ Gestión de direcciones (País, Departamento, Municipio)
-- ✅ Múltiples direcciones por usuario
-- ✅ Flujo de 3 pantallas mínimo
-- ✅ Visualización de datos del usuario
-- ✅ Control de errores y estados
-- ✅ Cobertura de tests unitarios
+</div>
 
-## 🏗️ Arquitectura
+## � Descripción
 
-El proyecto sigue **Clean Architecture** con la siguiente estructura:
+DoubleV es una aplicación móvil desarrollada en Flutter que permite gestionar usuarios y sus direcciones de manera eficiente. Implementa Clean Architecture, principios SOLID y utiliza las últimas tecnologías del ecosistema Flutter para ofrecer una experiencia de usuario fluida y mantenible.
+
+### ✨ Características Principales
+
+- **👤 Gestión de Usuarios**: Crear, visualizar y editar información personal
+- **🏠 Direcciones Múltiples**: Cada usuario puede tener múltiples direcciones
+- **🌍 Selección Geográfica**: Países, departamentos y municipios organizados
+- **📱 UI Moderna**: Diseño con Material 3 y componentes personalizados
+- **💾 Persistencia Local**: Almacenamiento eficiente con Hive
+- **🔄 Estado Reactivo**: Manejo de estado con Riverpod
+- **🧪 Cobertura de Tests**: Tests unitarios y de integración
+
+## 📱 Screenshots
+
+### Pantalla Principal
+![Home Screen](docs/screenshots/home_screen.png)
+*Lista de usuarios con información básica y navegación intuitiva*
+
+### Formulario de Usuario  
+![User Form](docs/screenshots/user_form.png)
+*Creación de usuarios con validaciones en tiempo real*
+
+### Detalle de Usuario
+![User Detail](docs/screenshots/user_detail.png)
+*Vista detallada con información completa y direcciones*
+
+### Formulario de Direcciones
+![Address Form](docs/screenshots/address_form.png)
+*Selección jerárquica de ubicación geográfica*
+
+## 🚀 Instalación
+
+### Prerrequisitos
+- Flutter SDK >=3.9.2
+- Dart SDK >=3.0.0
+- Android Studio / VS Code
+- iOS Simulator / Android Emulator
+
+### Pasos de Instalación
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/your-username/doublev.git
+cd doublev
+
+# 2. Instalar dependencias
+flutter pub get
+
+# 3. Generar archivos de código
+dart run build_runner build
+
+# 4. Ejecutar la aplicación
+flutter run
+```
+
+## 🛠️ Arquitectura
+
+La aplicación sigue **Clean Architecture** con separación clara en tres capas:
 
 ```
 lib/
-├── core/                   # Utilidades, constantes y configuraciones
-│   ├── constants/
-│   ├── errors/
-│   ├── usecases/
-│   └── utils/
-├── features/               # Características de la aplicación
-│   ├── user/
-│   │   ├── data/          # Repositorios, models, datasources
-│   │   ├── domain/        # Entities, repositories abstractos, use cases
-│   │   └── presentation/  # UI, providers, pages
-│   └── address/
-│       ├── data/
-│       ├── domain/
-│       └── presentation/
-└── shared/                 # Componentes compartidos
-    ├── widgets/
-    └── providers/
+├── 📂 core/              # Utilidades y configuraciones compartidas
+├── 📂 features/          # Características de la aplicación
+│   ├── 📂 user/          # Módulo de usuarios
+│   └── 📂 address/       # Módulo de direcciones
+└── 📂 shared/            # Providers y componentes compartidos
 ```
 
-## 🛠️ Tecnologías y Paquetes
+### Principios Implementados
 
-### Estado y Arquitectura
-- **Riverpod** - Manejo de estado reactivo
-- **Go Router** - Navegación declarativa y type-safe
-- **Equatable** - Comparación de objetos y value objects
+- **🎯 SOLID Principles**: Cada clase tiene una responsabilidad única
+- **🔄 Dependency Inversion**: Abstracciones no dependen de detalles
+- **📦 Repository Pattern**: Abstracción de acceso a datos
+- **🏗️ Use Cases**: Lógica de negocio encapsulada
+- **🧩 Provider Pattern**: Inyección de dependencias
+
+## �️ Tecnologías Utilizadas
+
+### Estado y Navegación
+- **[Riverpod](https://riverpod.dev/)** - Manejo de estado reactivo y DI
+- **[Go Router](https://pub.dev/packages/go_router)** - Navegación declarativa
 
 ### Persistencia y Datos
-- **Hive** - Base de datos NoSQL local y rápida
-- **Dio** - Cliente HTTP para APIs (países, departamentos, municipios)
-- **TextEditingController** - Manejo de formularios con mejores prácticas
+- **[Hive](https://hivedb.dev/)** - Base de datos NoSQL local
+- **[Dio](https://pub.dev/packages/dio)** - Cliente HTTP
+- **[Equatable](https://pub.dev/packages/equatable)** - Comparación de objetos
 
-### Desarrollo y Calidad
-- **Clean Architecture** - Arquitectura de capas bien definidas
-- **SOLID Principles** - Principios de diseño orientado a objetos
-- **Repository Pattern** - Abstracción de acceso a datos
-- **Dependency Injection** - Inyección de dependencias con Riverpod
+### UI y Formularios
+- **Material 3** - Design system moderno
+- **TextEditingController** - Manejo de formularios
+- **Form Validation** - Validaciones personalizadas
 
-### Testing Completo
-- **flutter_test** - Tests unitarios
-- **integration_test** - Tests de integración
-- **mocktail** - Mocking avanzado para tests
-- **golden_toolkit** - Tests de UI (golden tests)
-- **patrol** - Tests end-to-end (opcional)
+### Testing y Calidad
+- **flutter_test** - Framework de testing
+- **mocktail** - Mocking para tests
+- **golden_toolkit** - Tests de UI
+
+## 🧪 Testing
+
+### Ejecutar Tests
+
+```bash
+# Todos los tests
+flutter test
+
+# Solo tests unitarios
+flutter test test/unit/
+
+# Con reporte de cobertura
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
+
+### Cobertura Actual
+- **✅ 21 tests** pasando exitosamente
+- **📊 Cobertura**: Entidades, utilidades y widgets principales
+- **🎯 Tipos**: Unit tests, Widget tests
+
+## 📚 Estructura de Datos
+
+### Usuario
+```dart
+User {
+  String id;              // Identificador único
+  String firstName;       // Nombres
+  String lastName;        // Apellidos  
+  DateTime birthDate;     // Fecha de nacimiento
+  List<String> addresses; // IDs de direcciones
+}
+```
+
+### Dirección
+```dart
+Address {
+  String id;                  // Identificador único
+  String userId;             // ID del usuario propietario
+  String country;            // País
+  String department;         // Departamento/Estado
+  String municipality;       // Municipio/Ciudad
+  String street;             // Dirección específica
+  String? additionalInfo;    // Información adicional
+}
+```
+
+## 🔧 Comandos de Desarrollo
+
+```bash
+# Análisis de código
+flutter analyze
+
+# Formateo de código
+dart format .
+
+# Generación de código
+dart run build_runner build
+
+# Limpieza de build
+flutter clean && flutter pub get
+
+# Build de producción
+flutter build apk --release    # Android
+flutter build ios --release    # iOS
+```
+
+## 📋 Próximas Características
+
+- [ ] Búsqueda y filtrado de usuarios
+- [ ] Importación/exportación de datos
+- [ ] Modo offline con sincronización
+- [ ] Notificaciones push
+- [ ] Compartir información de contacto
+- [ ] Backup en la nube
+- [ ] Modo oscuro/claro
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+### Estándares de Código
+- Sigue las convenciones de Dart/Flutter
+- Agrega tests para nuevas funcionalidades
+- Mantén la arquitectura Clean existente
+- Documenta APIs públicas
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado como prueba técnica para Double V Partners NYX.
+
+## 👨‍💻 Autor
+
+**Andrés Arenas**
+- GitHub: [@your-username](https://github.com/your-username)
+- Email: your.email@example.com
+- LinkedIn: [Your Profile](https://linkedin.com/in/your-profile)
+
+---
+
+<div align="center">
+
+**Desarrollado con ❤️ usando Flutter**
+
+⭐ ¡Dale una estrella si te gustó el proyecto! ⭐
+
+</div>
 
 ## 🚀 Instalación y Configuración
 

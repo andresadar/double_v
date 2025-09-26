@@ -49,7 +49,12 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.go('/user/${widget.userId}');
+        // Resetear el formulario
+        ref.read(addressFormProvider.notifier).resetForm();
+        // Navegar de vuelta al detalle del usuario
+        if (context.mounted) {
+          context.pop();
+        }
       } else if (next.errorMessage != null && previous?.errorMessage != next.errorMessage) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -76,7 +81,7 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
                 // Selector de País
                 countriesAsyncValue.when(
                   data: (countries) => DropdownButtonFormField<String>(
-                    value: _selectedCountry,
+                    initialValue: _selectedCountry,
                     decoration: InputDecoration(
                       labelText: 'País',
                       prefixIcon: const Icon(Icons.flag),
@@ -120,7 +125,7 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
                   labelText: 'Dirección',
                   hintText: 'Ej: Carrera 10 # 20-30',
                   prefixIcon: Icons.location_on_outlined,
-                  maxLines: 2,
+                  maxLines: 1,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'La dirección es obligatoria';
@@ -138,7 +143,7 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
                   labelText: 'Información adicional (opcional)',
                   hintText: 'Ej: Apartamento 201, Edificio Torre A',
                   prefixIcon: Icons.info_outline,
-                  maxLines: 3,
+                  maxLines: 1,
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton(
@@ -189,7 +194,7 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
     final departments = _getMockDepartments(_selectedCountry!);
     
     return DropdownButtonFormField<String>(
-      value: _selectedDepartment,
+      initialValue: _selectedDepartment,
       decoration: InputDecoration(
         labelText: 'Departamento',
         prefixIcon: const Icon(Icons.location_city),
@@ -239,7 +244,7 @@ class _AddressFormPageState extends ConsumerState<AddressFormPage> {
     final municipalities = _getMockMunicipalities(_selectedCountry!, _selectedDepartment!);
     
     return DropdownButtonFormField<String>(
-      value: _selectedMunicipality,
+      initialValue: _selectedMunicipality,
       decoration: InputDecoration(
         labelText: 'Municipio',
         prefixIcon: const Icon(Icons.location_on),
