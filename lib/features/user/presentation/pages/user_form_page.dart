@@ -21,6 +21,36 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   DateTime? _selectedDate;
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Si estamos editando, cargar los datos del usuario
+    if (widget.userId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _loadUserData();
+      });
+    } else {
+      _isInitialized = true;
+    }
+  }
+
+  void _loadUserData() async {
+    if (widget.userId != null && !_isInitialized) {
+      final userAsyncValue = ref.read(userByIdProvider(widget.userId!));
+      userAsyncValue.whenData((user) {
+        if (user != null && mounted) {
+          setState(() {
+            _firstNameController.text = user.firstName;
+            _lastNameController.text = user.lastName;
+            _selectedDate = user.birthDate;
+            _isInitialized = true;
+          });
+        }
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -33,18 +63,62 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
   Widget build(BuildContext context) {
     final formState = ref.watch(userFormProvider);
     
+    // Si estamos cargando datos del usuario para editar
+    if (widget.userId != null && !_isInitialized) {
+      final userAsyncValue = ref.watch(userByIdProvider(widget.userId!));
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Cargando...'),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        body: userAsyncValue.when(
+          data: (user) {
+            if (user != null && !_isInitialized) {
+              // Cargar datos una sola vez
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) {
+                  setState(() {
+                    _firstNameController.text = user.firstName;
+                    _lastNameController.text = user.lastName;
+                    _selectedDate = user.birthDate;
+                    _isInitialized = true;
+                  });
+                }
+              });
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Error: $error'),
+                ElevatedButton(
+                  onPressed: () => context.pop(),
+                  child: const Text('Volver'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+    
     // Escuchar cambios de estado para navegar cuando se complete
     ref.listen(userFormProvider, (previous, next) {
       if (next.isSuccess && previous?.isSuccess != true) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Usuario creado exitosamente'),
+          SnackBar(
+            content: Text(widget.userId != null 
+                ? 'Usuario actualizado exitosamente' 
+                : 'Usuario creado exitosamente'),
             backgroundColor: Colors.green,
           ),
         );
         // Resetear el formulario
         ref.read(userFormProvider.notifier).resetForm();
-        // Navegar de vuelta al home
+        // Navegar de vuelta
         if (context.mounted) {
           context.pop();
         }
@@ -150,11 +224,22 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      ref.read(userFormProvider.notifier).createUser(
-        firstName: _firstNameController.text.trim(),
-        lastName: _lastNameController.text.trim(),
-        birthDate: _selectedDate!,
-      );
+      if (widget.userId != null) {
+        // Editar usuario existente
+        ref.read(userFormProvider.notifier).updateUser(
+          id: widget.userId!,
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          birthDate: _selectedDate!,
+        );
+      } else {
+        // Crear nuevo usuario
+        ref.read(userFormProvider.notifier).createUser(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          birthDate: _selectedDate!,
+        );
+      }
     }
   }
 }

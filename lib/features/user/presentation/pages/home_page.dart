@@ -76,7 +76,7 @@ class HomePage extends ConsumerWidget {
                       onTap: () {
                         context.push('/user/${user.id}');
                       },
-                      onEdit: () => context.push('/user-form/${user.id}'),
+                      onEdit: () => context.push(AppRoutes.userForm, extra: user.id),
                       onDelete: () => _showDeleteUserConfirmation(context, user, ref),
                     ),
                   );
@@ -88,7 +88,7 @@ class HomePage extends ConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -124,7 +124,7 @@ class HomePage extends ConsumerWidget {
                 color: AppColors.errorBackground,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppColors.error.withOpacity(0.3),
+                  color: AppColors.error.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -186,7 +186,7 @@ class HomePage extends ConsumerWidget {
             borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.4),
+                color: AppColors.primary.withValues(alpha: 0.4),
                 blurRadius: 15,
                 offset: const Offset(0, 8),
               ),

@@ -6,6 +6,7 @@ import '../../domain/usecases/create_user.dart';
 import '../../domain/usecases/get_users.dart';
 import '../../domain/usecases/get_user_by_id.dart';
 import '../../domain/usecases/delete_user.dart';
+import '../../domain/usecases/update_user.dart';
 
 /// Provider para el caso de uso GetUsers
 final getUsersUseCaseProvider = Provider<GetUsers>((ref) {
@@ -15,6 +16,11 @@ final getUsersUseCaseProvider = Provider<GetUsers>((ref) {
 /// Provider para el caso de uso CreateUser
 final createUserUseCaseProvider = Provider<CreateUser>((ref) {
   return CreateUser(ref.watch(userRepositoryProvider));
+});
+
+/// Provider para el caso de uso UpdateUser
+final updateUserUseCaseProvider = Provider<UpdateUser>((ref) {
+  return UpdateUser(ref.watch(userRepositoryProvider));
 });
 
 /// Provider para el caso de uso GetUserById
@@ -41,7 +47,11 @@ final userByIdProvider = FutureProvider.family<User?, String>((ref, userId) asyn
 
 /// Provider para el estado del formulario de usuario
 final userFormProvider = StateNotifierProvider<UserFormNotifier, UserFormState>((ref) {
-  return UserFormNotifier(ref.watch(createUserUseCaseProvider), ref);
+  return UserFormNotifier(
+    ref.watch(createUserUseCaseProvider),
+    ref.watch(updateUserUseCaseProvider),
+    ref,
+  );
 });
 
 /// Provider para manejar la eliminación de usuarios
@@ -76,9 +86,10 @@ class UserFormState {
 
 /// Notifier para manejar el estado del formulario de usuario
 class UserFormNotifier extends StateNotifier<UserFormState> {
-  UserFormNotifier(this._createUserUseCase, this._ref) : super(const UserFormState());
+  UserFormNotifier(this._createUserUseCase, this._updateUserUseCase, this._ref) : super(const UserFormState());
 
   final CreateUser _createUserUseCase;
+  final UpdateUser _updateUserUseCase;
   final Ref _ref;
 
   Future<void> createUser({
@@ -97,6 +108,35 @@ class UserFormNotifier extends StateNotifier<UserFormState> {
       
       // Invalidar el provider de usuarios para que se actualice la lista
       _ref.invalidate(usersProvider);
+      
+      state = state.copyWith(isLoading: false, isSuccess: true);
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  Future<void> updateUser({
+    required String id,
+    required String firstName,
+    required String lastName,
+    required DateTime birthDate,
+  }) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+
+    try {
+      await _updateUserUseCase(UpdateUserParams(
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+      ));
+      
+      // Invalidar los providers relacionados
+      _ref.invalidate(usersProvider);
+      _ref.invalidate(userByIdProvider(id));
       
       state = state.copyWith(isLoading: false, isSuccess: true);
     } catch (e) {
