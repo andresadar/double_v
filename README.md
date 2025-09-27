@@ -90,7 +90,7 @@ presentation/ → domain/ → data/
 
 ```bash
 # 1. Clonar repositorio
-git clone <repository-url>
+git clone <https://github.com/andresadar/double_v>
 cd doublev
 
 # 2. Instalar dependencias
